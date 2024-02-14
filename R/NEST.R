@@ -1,47 +1,36 @@
-# function to implement all steps of NEST
-
-# args.gam = list(X = X, model.matrix.gam = model.matrix.gam, columns.to.test.gam = columns.to.test.gam,
-#             model.matrix.linear = model.matrix.linear,
-#             column.to.test.lm = column.to.test.lm, FL = FALSE, getNull = T)
-# NEST.test = NEST(statFun = "gam.mvwald",
-#                  args = args, net.maps = net.maps, n.perm = 10, seed = 1, what.to.return = c("pval"))
-# 
-# 
-# args.lm = list(X = X,
-#             y = y,
-#             Z = Z,
-#             type = "coef",
-#             FL = FALSE,
-#             getNull = TRUE)
-# 
-# NEST.test.lm = NEST(statFun = "lm",
-#                     args = args.lm, net.maps = net.maps, n.perm = 10, seed = 1, what.to.return = "everything", n.cores = 20)
-
-
-
+#' NEST function
+#'@param statFun (to do: add descriptions)
+#'@param args .....
+#'@param net.maps .....
+#'@param one.sided .....
+#'@param stat.fun .....
+#'@param n.cores .....
+#'@param seed .....
+#'@param what.to.return .....
+#'@export
 NEST = function(statFun, args, net.maps, one.sided = TRUE, stat.fun, n.cores = 1, seed = NULL, what.to.return = c("pval")){
-  
+
   # check input requirements:
   if (!is.list(net.maps)){
     message("net.maps argument should be a list, of vectors (one for each network)")
     return(NULL)
   }
-  
+
   if (ncol(args$X) != length(net.maps[[1]])){
     message("each network should be specified as a vector with length equal to number of columns of X.")
     return(NULL)
   }
-  
+
   if (!identical(sort(unique(unlist(net.maps))), c(0,1))){ # check that network maps are all 0s and 1s
     message("net.maps should include only 0's and 1's (1 = in network/ROI; 0 = outside network/ROI)")
     return(NULL)
   }
-  
+
   # map brain-phenotype associations
   if (statFun == "lm"){
     required.args = c("X", "y")
     optional.args = c("Z", "type", "FL", "getNull","n.perm")
-    
+
     args = checkArgs(args = args, required.args = required.args, optional.args = optional.args)
     if (!isFALSE(args)){
       statFun.out = statFun.lm(X = args$X,
@@ -57,17 +46,17 @@ NEST = function(statFun, args, net.maps, one.sided = TRUE, stat.fun, n.cores = 1
       message("fix args!")
       return(NULL)
     }
-    
+
   }
-  
+
   if (statFun == "gam.mvwald"){
-    
+
     # check args:
     required.args = c("X","dat","gam.formula","lm.formula","y.in.gam","y.in.lm")
     optional.args = c("n.perm")
-    
+
     args = checkArgs(args = args, required.args = required.args, optional.args = optional.args)
-    
+
     if (!isFALSE(args)){
       statFun.out = statFun.gam.mvwald(X = args$X,
                                         dat = args$dat,
@@ -77,38 +66,38 @@ NEST = function(statFun, args, net.maps, one.sided = TRUE, stat.fun, n.cores = 1
                                         y.in.lm = args$y.in.lm,
                                         y.permute = args$y.permute,
                                        n.cores = n.cores, seed = seed,
-                                       n.perm = n.perm,
+                                       n.perm = args$n.perm,
                                        getNull = TRUE # if doing this inside NEST function, assume testing is being done (if just want to get map, could just use the statFun function directly)
                                        )
     }else{
       message("fix args!")
       return(NULL)
     }
-    
+
   }
 
-  
+
   ES.list = mclapply(net.maps, FUN = function(net.map){
       ES.obs = enrichScore(stat.map = statFun.out$T.obs,
                   net.map = net.map,
                   one.sided = one.sided,
                   save.detail = F)
-      
+
       ES.null = lapply(1:n.perm, FUN = function(k){
         enrichScore(stat.map = statFun.out$T.null[[k]],
                     net.map = net.map,
                     one.sided = one.sided,
                     save.detail = F)
       })
-      
+
       return(list(ES.obs = ES.obs,
                   ES.null.dist = ES.null))
   }, mc.cores = n.cores)
-  
+
   pval.list = mclapply(1:length(net.maps), FUN = function(net){
     pvalFun(obs = ES.list[[net]]$ES.obs, null.dist = ES.list[[net]]$ES.null.dist)
   })
-  
+
   out = list()
 
   if ("everything" %in% what.to.return){
@@ -121,39 +110,24 @@ NEST = function(statFun, args, net.maps, one.sided = TRUE, stat.fun, n.cores = 1
     if ("pval" %in% what.to.return){ # default is to just return p-values
       out$pval = pval.list
     }
-    
+
     if ("ES" %in% what.to.return){
       out$ES = ES.list
     }
-    
+
     if ("ES.obs" %in% what.to.return){
       out$ES.obs = sapply(ES.list, FUN = function(x){x$ES.obs})
     }
-    
+
     if ("T.obs" %in% what.to.return){
       out$T.obs = statFun.out$T.obs
     }
-    
+
     if ("T.null" %in% what.to.return){
       out$T.null = statFun.out$T.null
     }
     return(out)
   }
-  
-  
-}
 
-# args = list(X = X,
-#             y = y,
-#             Z = Z,
-#             type = "coef",
-#             FL = FALSE,
-#             getNull = TRUE)
-# 
-# statFun.gamfunction(X = args$X,
-#                     model.matrix.gam = args$model.matrix.gam,
-#                     columns.to.test.gam = args$columns.to.test.gam,
-#                     model.matrix.linear = args$model.matrix.linear,
-#                     column.to.test.lm, n.cores = 1, seed = 1,
-#                     FL = args$FL, n.perm = n.perm, getNull = args$getNull)
-# 
+
+}
