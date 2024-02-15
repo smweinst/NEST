@@ -1,2 +1,11 @@
 # NEST R package
-(testing...)
+
+Installation:
+
+```{
+if (!require(devtools)){
+  install.packages("devtools")
+}
+devtools::install_github("smweinst/NEST")
+library(NEST)
+```
