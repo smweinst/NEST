@@ -46,8 +46,8 @@ statFun.lm = function(X, y, Z = 1, type = "coef", n.cores = 1, seed = NULL, FL =
       return(list(T.obs = stat.obs,
                   T.null = stat.null))
     } else{
-      #return(stat.obs)
-      return(list(T.obs = stat.obs))
+      # This may cause a bug when calling enrichScore(stat.map = statFun.out$T.obs) in NEST.R since statFun.out doesn't have T.obs.
+      return(stat.obs)
     }
 
 
