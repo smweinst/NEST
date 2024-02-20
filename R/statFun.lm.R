@@ -37,9 +37,7 @@ statFun.lm = function(X, y, Z = 1, type = "coef", n.cores = 1, seed = NULL, FL =
 
     if (getNull == TRUE){ # recursive function used below -- specifying getNull = FALSE so that we don't get a null distribution for the null iterations
       stat.null = lapply(1:n.perm, FUN = function(k){
-        # I'm not sure if we should specify n.perm to 1 for this recursive calling. We only want to do one permutation in 1:n.perm?
-        #statFun.lm(X = X, y = y[perm.ind[[k]]], Z = Z, type = type, n.cores = n.cores, seed = seed, FL = FALSE, getNull = FALSE)
-        statFun.lm(X = X, y = y[perm.ind[[k]]], Z = Z, type = type, n.cores = n.cores, seed = seed, FL = FALSE, n.perm = 1, getNull = FALSE)
+        statFun.lm(X = X, y = y[perm.ind[[k]]], Z = Z, type = type, n.cores = n.cores, seed = seed, FL = FALSE, getNull = FALSE)$T.obs
       })
 
       #stat.null = do.call("cbind",null.stat)
@@ -47,8 +45,7 @@ statFun.lm = function(X, y, Z = 1, type = "coef", n.cores = 1, seed = NULL, FL =
       return(list(T.obs = stat.obs,
                   T.null = stat.null))
     } else{
-      # This may cause a bug when calling enrichScore(stat.map = statFun.out$T.obs) in NEST.R since statFun.out doesn't have T.obs.
-      return(stat.obs)
+      return(list(T.obs = stat.obs))
     }
 
 
