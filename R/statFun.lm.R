@@ -37,6 +37,7 @@ statFun.lm = function(X, y, Z = 1, type = "coef", n.cores = 1, seed = NULL, FL =
 
     if (getNull == TRUE){ # recursive function used below -- specifying getNull = FALSE so that we don't get a null distribution for the null iterations
       stat.null = lapply(1:n.perm, FUN = function(k){
+        # I'm not sure if we should specify n.perm to 1 for this recursive calling. We only want to do one permutation in 1:n.perm?
         #statFun.lm(X = X, y = y[perm.ind[[k]]], Z = Z, type = type, n.cores = n.cores, seed = seed, FL = FALSE, getNull = FALSE)
         statFun.lm(X = X, y = y[perm.ind[[k]]], Z = Z, type = type, n.cores = n.cores, seed = seed, FL = FALSE, n.perm = 1, getNull = FALSE)
       })
@@ -64,7 +65,9 @@ statFun.lm = function(X, y, Z = 1, type = "coef", n.cores = 1, seed = NULL, FL =
 
         null.stat.v = sapply(1:n.perm, FUN = function(k){
           permX.v.k = reducedmod.resid.v[perm.ind[[k]],] + reducedmod.v$fitted.values # permute residuals + add back fitted values from reduced model
-          fullmod.permX.v.k = lm(permX.k ~ y + Z) # refit full model using permuted data
+          # Should this be permX.v.k? Because permX.k is not defined and could cause an error.
+          fullmod.permX.v.k = lm(permX.v.k ~ y + Z) # refit full model using permuted data
+          #fullmod.permX.v.k = lm(permX.k ~ y + Z) # refit full model using permuted data
           null.stat.v.k = summary(fullmod.permX.v.k)$coefficients["y",type.ind]
           return(null.stat.v.k)
         })
