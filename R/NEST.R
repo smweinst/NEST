@@ -83,7 +83,7 @@ NEST = function(statFun, args, net.maps, one.sided = TRUE, stat.fun, n.cores = 1
                   one.sided = one.sided,
                   save.detail = F)
 
-      ES.null = lapply(1:n.perm, FUN = function(k){
+      ES.null = lapply(1:args$n.perm, FUN = function(k){
         enrichScore(stat.map = statFun.out$T.null[[k]],
                     net.map = net.map,
                     one.sided = one.sided,
