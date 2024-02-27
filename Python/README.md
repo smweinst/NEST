@@ -34,15 +34,21 @@ hcp_utils
 numpy
 pandas
 ```
-Install requirment dependents
+Install requirement dependents
 ```
 pip3 install scipy sklearn pandas matplotlib nibabel nilearn hcp_utils
 ```
+(todo) Then install NEST
 
-Then download the project and start jupyter lab to run the codes
+'''
+pip install NEST
+'''
+
+Run the NEST method
 
 ```
-python ./test.py
+from NEST import NEST
+output = NEST(statFun,args, net_maps, n_cores=1, seed=None)
 ```
 
 
