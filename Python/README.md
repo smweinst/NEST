@@ -44,11 +44,21 @@ pip3 install scipy sklearn pandas matplotlib nibabel nilearn hcp_utils
 pip install NEST
 ```
 
-Run the NEST method
+Run the NEST method. An example like
 
 ```
 from NEST import NEST
-output = NEST(statFun,args, net_maps, n_cores=1, seed=None)
+
+args = {
+    'X': data,
+    'y': phenotype1,
+    'Z': phenotype2,
+    'type': 'coef',
+    'FL': False,
+    'getNull': True,
+    'n_perm': 5
+}
+pval,ES_obs,ES_null,running_sum = NEST(statFun='lm',args=args,net_maps=net_6,n_cores=1,seed=123)
 ```
 
 
