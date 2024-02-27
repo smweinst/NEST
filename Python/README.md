@@ -40,9 +40,9 @@ pip3 install scipy sklearn pandas matplotlib nibabel nilearn hcp_utils
 ```
 (todo) Then install NEST
 
-'''
+```
 pip install NEST
-'''
+```
 
 Run the NEST method
 
