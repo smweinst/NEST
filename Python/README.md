@@ -8,18 +8,6 @@
 </p>
 
 
-## Overal workflow of NEST
-```
-1.
-2.
-3.
-4.
-5.
-6.
-7.
-```
-
-## Data
 
 ## Getting Started:
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -38,16 +26,16 @@ Install requirement dependents
 ```
 pip3 install scipy sklearn pandas matplotlib nibabel nilearn hcp_utils
 ```
-(todo) Then install NEST
+Then install the NEST via pip
 
 ```
-pip install NEST
+pip install nest-sw
 ```
 
 Run the NEST method. An example like
 
 ```
-from NEST import NEST
+from nest-sw import nest
 
 args = {
     'X': data,
