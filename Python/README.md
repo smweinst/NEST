@@ -39,8 +39,8 @@ from nest-sw import nest
 
 args = {
     'X': data,
-    'y': phenotype1,
-    'Z': phenotype2,
+    'y': phenotype,
+    'Z': covariate,
     'type': 'coef',
     'FL': False,
     'getNull': True,
