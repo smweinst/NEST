@@ -50,6 +50,16 @@ def NEST(statFun,args, net_maps, n_cores=1, seed=None):
         # to be added
         print('No implementation.')
         return None
+    
+    # For custom methods, the user should at least specify the arguments X, y, and method (method name). It is optional for users to add more arguments to args as needed.
+    elif statFun == 'custom':
+        required_args = ["X", "y", "method"]
+        optional_args = []
+        #optional_args = ["Z", "type", "FL", "getNull", "n_perm"]
+        args = check_args(args, required_args, optional_args)
+
+        if args:
+            statFun_out = args["method"](args)
     else:
         return None
 
