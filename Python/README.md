@@ -8,18 +8,6 @@
 </p>
 
 
-## Overal workflow of NEST
-```
-1.
-2.
-3.
-4.
-5.
-6.
-7.
-```
-
-## Data
 
 ## Getting Started:
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -34,15 +22,31 @@ hcp_utils
 numpy
 pandas
 ```
-Install requirment dependents
+Install requirement dependents
 ```
 pip3 install scipy sklearn pandas matplotlib nibabel nilearn hcp_utils
 ```
-
-Then download the project and start jupyter lab to run the codes
+Then install the NEST via pip
 
 ```
-python ./test.py
+pip install nest-sw
+```
+
+Run the NEST method. An example like
+
+```
+from nest-sw import nest
+
+args = {
+    'X': data,
+    'y': phenotype,
+    'Z': covariate,
+    'type': 'coef',
+    'FL': False,
+    'getNull': True,
+    'n_perm': 5
+}
+pval,ES_obs,ES_null,running_sum = NEST(statFun='lm',args=args,net_maps=net_6,n_cores=1,seed=123)
 ```
 
 
