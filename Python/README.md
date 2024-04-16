@@ -4,7 +4,7 @@
 # Illustration of NEST
 
  <p align="center">
-  <img width="100%" height="auto" src="https://github.com/Bin-8258/NEST/blob/main/Img/enrichment_illustration.jpeg">
+  <img width="100%" height="auto" src="https://github.com/smweinst/NEST/blob/main/Python/NEST_illustration.jpeg">
 </p>
 
 
