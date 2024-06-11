@@ -1,3 +1,5 @@
+import numpy as np
+
 def check_args(args, required_args, optional_args):
     '''
     args: a dictionary of arguments provided to the function.
@@ -21,7 +23,7 @@ def check_args(args, required_args, optional_args):
             print("Using the following default settings: \n")
         # Additional logic for specific default settings
         if 'Z' in optional_args and 'Z' not in args:
-            args['Z'] = 1
+            args['Z'] = np.ones(args['y'].shape)
             print("\nargs['Z'] = 1 ---> defaulting to no covariates, just intercept\n")
 
         if 'type' in optional_args and 'type' not in args:
