@@ -65,11 +65,11 @@ def NEST(statFun,args, net_maps, n_cores=1, seed=None):
 
     networks = ['net_'+str(x) for x in range(1)]
 
-    ES_obs,running_sum = enrichScore(statFun_out['T_obs'],net_maps,networks,False)
+    ES_obs,running_sum = enrichScore(statFun_out['T_obs'],net_maps,networks,1,False)
 
     ES_null = {}
     for i in range(args['n_perm']):
-        ES_perm, _ = enrichScore(statFun_out['T_null'][i],net_maps,networks,False)
+        ES_perm, _ = enrichScore(statFun_out['T_null'][i],net_maps,networks,1,False)
         for net, val in ES_perm.items():
             if net in ES_null:
                 ES_null[net].append(val)
