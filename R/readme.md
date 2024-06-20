@@ -86,6 +86,8 @@ Note: non-linear regression-based statistics can also be used. This example is j
 out <- NEST(statFun = "lm", # use linear regression to get vertex-level test statistics
     args = args, # arguments specified above (specific to statFun="lm")
     net.maps = net, # list of binary indicating locations inside (1) or outside (1) network(s) of interest.
-    what.to.return = "everything" # return all output including p-value, enrichment score, null distribution, etc. (if left unspecified, the default is to return only the p-value for each network)
+    what.to.return = "everything" # return all output including p-value, enrichment score,
+                                  # null distribution, etc. (if left unspecified, the default
+                                  # is to return only the p-value for each network)
 )
 ```
