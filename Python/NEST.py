@@ -6,7 +6,7 @@ from enrichScore import enrichScore
 from statFun_lm import stat_fun_lm
 
 
-def NEST(statFun,args, net_maps, n_cores=1, seed=None):
+def NEST(statFun,args, net_maps, n_cores=1, one_sided=True, seed=None):
     '''
     Input:
         statFun:
@@ -65,11 +65,11 @@ def NEST(statFun,args, net_maps, n_cores=1, seed=None):
 
     networks = ['net_'+str(x) for x in range(1)]
 
-    ES_obs,running_sum = enrichScore(statFun_out['T_obs'],net_maps,networks,1,False)
+    ES_obs,running_sum = enrichScore(statFun_out['T_obs'],net_maps,networks,1,one_sided,False)
 
     ES_null = {}
     for i in range(args['n_perm']):
-        ES_perm, _ = enrichScore(statFun_out['T_null'][i],net_maps,networks,1,False)
+        ES_perm, _ = enrichScore(statFun_out['T_null'][i],net_maps,networks,1,one_sided,False)
         for net, val in ES_perm.items():
             if net in ES_null:
                 ES_null[net].append(val)

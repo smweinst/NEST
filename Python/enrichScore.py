@@ -1,6 +1,6 @@
 import numpy as np
 
-def enrichScore(L, L_network_labels,  networks=['test'], p=1, save_vertex_level=False):
+def enrichScore(L, L_network_labels,  networks=['test'], p=1, one_sided=True, save_vertex_level=False):
     """
     Calculate the enrichment score for each network.
 
@@ -29,8 +29,10 @@ def enrichScore(L, L_network_labels,  networks=['test'], p=1, save_vertex_level=
         # val is from 0,1,2,..., to len(networks)-1
 
         curr_net_ind = (L_network_labels_sorted == val+1)
-
-        P_hit_numerator = np.cumsum(L_sorted_p * curr_net_ind)
+        if one_sided:
+            P_hit_numerator = np.cumsum(L_sorted_p * curr_net_ind)
+        else:
+            P_hit_numerator = np.cumsum(L_network_labels_sorted)
         P_hit = P_hit_numerator / P_hit_numerator[-1]
 
         P_miss_numerator = np.cumsum(1 - curr_net_ind)
