@@ -55,16 +55,18 @@ You can reach out to us regarding your questions , suggestions, and possible col
 
 Prof. Sarah M. Weinstein: sarah.m.weinstein@temple.edu
 
-## Citation (need update)
+## Citation
 If you use our model in any project or publication, please cite our paper [Network Enrichment Significance Testing in Brain-Phenotype Association Studies](https://www.biorxiv.org/content/10.1101/2023.11.10.566593v1.abstract).
 
 ```
-@article{weinstein2023network,
-  title={Network Enrichment Significance Testing in Brain-Phenotype Association Studies},
-  author={Weinstein, Sarah M and Vandekar, Simon N and Alexander-Bloch, Aaron F and Raznahan, Armin and Li, Mingyao and Gur, Raquel E and Gur, Ruben C and Roalf, David R and Park, Min Tae M and Chakravarty, Mallar and others},
-  journal={bioRxiv},
-  pages={2023--11},
-  year={2023},
-  publisher={Cold Spring Harbor Laboratory}
+@article{weinstein2024network,
+  title={Network enrichment significance testing in brain--phenotype association studies},
+  author={Weinstein, Sarah M and Vandekar, Simon N and Li, Bin and Alexander-Bloch, Aaron F and Raznahan, Armin and Li, Mingyao and Gur, Raquel E and Gur, Ruben C and Roalf, David R and Park, Min Tae M and others},
+  journal={Human Brain Mapping},
+  volume={45},
+  number={8},
+  pages={e26714},
+  year={2024},
+  publisher={Wiley Online Library}
 }
 ```
