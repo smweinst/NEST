@@ -58,20 +58,20 @@ After loading the data, we recommend checking that the dimensions of your input 
 - dimensions of covariate/confounder vector or matrix `Z` should be `N` (x however many covariates you're adjusting for)
 
 #### Step 3: Define the following dictionary of arguments passed to the nest method. The args can be defined as follows, assuming vertex-wise linear models will be fit to estimate local brain-phenotype associations (i.e., specifying statFun=“lm” in step 4.).
-- X: N x P matrix of P imaging features (e.g., vertices) for N
+- `X`: N x P matrix of P imaging features (e.g., vertices) for N
   participants
-- y: N-dimensional vector of the phenotype of interest (i.e., testing
+- `y`: N-dimensional vector of the phenotype of interest (i.e., testing
   enrichment of X-y associations).
-- Z: Optional. Specify one or more covariates (matrix with N rows and q
+- `Z`: Optional. Specify one or more covariates (matrix with N rows and q
   columns for q covariates). Default is NULL (no covariates to be
   included).
-- FL: Optional. Default is FALSE, set to TRUE to use the Freedman-Lane
+- `FL`: Optional. Default is FALSE, set to TRUE to use the Freedman-Lane
   procedure to account for dependence between covariates in permutation.
-- n_perm: Optional. Default is 999, with the smallest possible p-value
+- `n.perm`: Optional. Default is 999, with the smallest possible p-value
   of 1/1000.
 
 ``` r
-args <- list(
+args.lm <- list(
     X = X, # brain measurements (dimension N subjects x P image locations)
     y = y, # phenotype of interest (dimension N)
     Z = Z, # covariates (dimension (N x # number of covariates)
@@ -82,18 +82,24 @@ args <- list(
 Note: non-linear regression-based statistics can also be used. This example is just for the regression-based statistic.
 
 #### Step 4: Apply NEST to test enrichment of brain-phenotype associations in specified networks.
+Arguments for NEST function: 
+- `statFun`: specify the method to get vertex-level test statistics (e.g., "lm"). Must correspond to a statFun R script (e.g., statFun.lm.R or statFun.gam.mvwald.R, or another one customized by the user)
+- `args`: arguments needed for whatever was specified as statFun
+- `net.maps`: list of binary vector(s) indicating locations inside (1) or outside (0) network(s) of interest.
+- `one.sided`: Specifies whether test is one-sided (one.sided=TRUE) or two-sided (one.sided = FALSE)
+    - In a one-sided test, we test whether T(v) are *more extreme* in vs. outside the network)
+    - In a two-sided test, we test whether the distribution of T(v) is *different* in vs. outside the network).
+    - Note: default is one.sided = TRUE, which is consistent with implementation used in the paper.
+- `n.cores`: specify the number of CPU cores to be employed for parallel processing tasks within the function
+- `seed`: random seed for reproducible permutation. Default is NULL, but we recommend setting one.
+- `what.to.return`: specify what values to return. "everything" will include p-value, enrichment score, null distribution, etc. If left unspecified, the default is to return only the p-value for each network.
 ``` r
-
-
-
-out <- nest(statFun = "lm", # Use linear regression to get vertex-level test statistics.
-    args = args, # Arguments specified above (specific to statFun="lm").
-    net.maps = net, # List of binary indicating locations inside (1) or outside (1) network(s) of interest.
-    one.sided = TRUE, # Determines whether the enrichment score calculation should consider only the positive alignment (True) or both directions (False).
-    n.cores = 1, # Specify the number of CPU cores to be employed for parallel processing tasks within the function
-    seed = NULL, # Random seed for reproducible permutation. Default is NULL. 
-    what.to.return = what_to_return # return all output including p-value, enrichment score,
-                                  # null distribution, etc. (if left unspecified, the default
-                                  # is to return only the p-value for each network)
+out <- NEST(statFun = "lm",
+            args = args.lm,
+            net.maps = net, 
+            one.sided = TRUE,
+            n.cores = 1, 
+            seed = 10, 
+            what.to.return = "everything")
 
 ```
