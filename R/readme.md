@@ -95,7 +95,7 @@ Arguments for NEST function:
 - `what.to.return`: specify what values to return. "everything" will include p-value, enrichment score, null distribution, etc. If left unspecified, the default is to return only the p-value for each network.
 ``` r
 out <- NEST(statFun = "lm",
-            args = args.lm,
+            args = args.lm, # arguments defined above (specific to statFun="lm" setting)
             net.maps = net, 
             one.sided = TRUE,
             n.cores = 1, 
