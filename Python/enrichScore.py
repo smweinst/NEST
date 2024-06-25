@@ -1,6 +1,6 @@
 import numpy as np
 
-def enrichScore(L, L_network_labels,  networks=['test'], one_sided=True, save_vertex_level=False):
+def enrichScore(L, L_network_labels,  networks=['test'], one_sided=True):
     """
     Calculate the enrichment score for each network.
 
