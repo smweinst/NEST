@@ -20,7 +20,7 @@ NEST = function(statFun, args, net.maps, one.sided = TRUE, n.cores = 1, seed = N
     return(NULL)
   }
 
-  if (!identical(sort(unique(unlist(net.maps))), c(0,1))){ # check that network maps are all 0s and 1s
+  if (!identical(as.numeric(sort(unique(unlist(net.maps)))), as.numeric(c(0,1)))){ # check that network maps are all 0s and 1s
     message("net.maps should include only 0's and 1's (1 = in network/ROI; 0 = outside network/ROI)")
     return(NULL)
   }
