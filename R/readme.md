@@ -91,7 +91,7 @@ out <- nest(statFun = "lm", # Use linear regression to get vertex-level test sta
     net.maps = net, # List of binary indicating locations inside (1) or outside (1) network(s) of interest.
     one.sided = TRUE, # Determines whether the enrichment score calculation should consider only the positive alignment (True) or both directions (False).
     n.cores = 1, # Specify the number of CPU cores to be employed for parallel processing tasks within the function
-    seed = NULL, # Random seed for reproducible permutation. Default is None. 
+    seed = NULL, # Random seed for reproducible permutation. Default is NULL. 
     what.to.return = what_to_return # return all output including p-value, enrichment score,
                                   # null distribution, etc. (if left unspecified, the default
                                   # is to return only the p-value for each network)
