@@ -6,7 +6,7 @@ from enrichScore import enrichScore
 from statFun_lm import stat_fun_lm
 
 
-def NEST(statFun,args, net_maps, n_cores=1, one_sided=True, seed=None):
+def NEST(statFun,args, net_maps, one_sided=True, seed=None):
     '''
     Input:
         statFun:
@@ -41,7 +41,7 @@ def NEST(statFun,args, net_maps, n_cores=1, one_sided=True, seed=None):
         if args:
 
             statFun_out = stat_fun_lm(X=args['X'], y=args['y'], Z=args['Z'], type=args['type'],
-                                     n_cores=n_cores, seed=seed, FL=args['FL'], n_perm=args['n_perm'],
+                                     seed=seed, FL=args['FL'], n_perm=args['n_perm'],
                                      getNull=args['getNull'])
         else:
             print('Error. Please check args.')

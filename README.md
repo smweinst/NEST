@@ -1,5 +1,5 @@
 # Network Enrichment Significance Testing (NEST)
-[*Link to preprint*](https://www.biorxiv.org/content/10.1101/2023.11.10.566593v1)
+[*Link to paper*](https://onlinelibrary.wiley.com/doi/full/10.1002/hbm.26714)
 
 This repository contains code for implementing Network Enrichment Significance Testing (NEST) in both python and R.
 

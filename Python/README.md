@@ -14,17 +14,16 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 ```
 Python
-sci-learn
+scikit-learn
 nibabel
-nilearn.plotting as plotting
+nilearn
 matplotlib
-hcp_utils
 numpy
 pandas
 ```
 Install requirement dependents
 ```
-pip3 install scipy sklearn pandas matplotlib nibabel nilearn hcp_utils
+pip3 install scipy scikit-learn pandas matplotlib nibabel nilearn
 ```
 Then install the NEST via pip
 
@@ -32,23 +31,7 @@ Then install the NEST via pip
 pip install nest-sw
 ```
 
-Run the NEST method. An example like
-
-```
-from nest-sw import nest
-
-args = {
-    'X': data,
-    'y': phenotype,
-    'Z': covariate,
-    'type': 'coef',
-    'FL': False,
-    'getNull': True,
-    'n_perm': 5
-}
-pval,ES_obs,ES_null,running_sum = NEST(statFun='lm',args=args,net_maps=net_6,n_cores=1,seed=123)
-```
-
+Example can be found at [here](https://github.com/smweinst/NEST/blob/main/Python/example.ipynb).
 
 ## Contact
 You can reach out to us regarding your questions , suggestions, and possible collaboration:

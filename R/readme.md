@@ -102,9 +102,12 @@ statistics for null distribution.
 ``` r
 what_to_return <- c("everything")
 
-out <- nest(statFun = "lm",
-    args = args,
-    net.maps = net,
-    what.to.return = what_to_return
+out <- nest(statFun = "lm", # Use linear regression to get vertex-level test statistics.
+    args = args, # Arguments specified above (specific to statFun="lm").
+    net.maps = net, # List of binary indicating locations inside (1) or outside (1) network(s) of interest.
+    one.sided = TRUE, # Determines whether the enrichment score calculation should consider only the positive alignment (True) or both directions (False).
+    n.cores = 1, # Specify the number of CPU cores to be employed for parallel processing tasks within the function
+    seed = NULL, # Random seed for reproducible permutation. Default is None. 
+    what.to.return = what_to_return # Specify what should be returned.
 )
 ```

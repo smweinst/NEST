@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 
 
-def stat_fun_lm(X, y, Z=1, type='coef', n_cores=1, seed=None, FL=False, n_perm=999, getNull=True):
+def stat_fun_lm(X, y, Z=1, type='coef', seed=None, FL=False, n_perm=999, getNull=True):
 
 
     y = y.reshape(-1,1)
