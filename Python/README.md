@@ -38,6 +38,11 @@ You can reach out to us regarding your questions , suggestions, and possible col
 
 Prof. Sarah M. Weinstein: sarah.m.weinstein@temple.edu
 
+## Details about `statFun` options
+`statFun` determines how location-specific test statistics ("T(v)") are computed. We've provided several built-in options (e.g., `statFun='lm'` or `statFun='gam_deltaRsq'`), and there is also an option to specify a custom one (`statFun='custom'` -- see example [here](https://github.com/smweinst/NEST/blob/main/Python/example.ipynb).
+
+**Note**: for `statFun='gam_deltaRsq'`, the result may be different than the corresponding implementation in R due to differences between R and python implementations of GAM, so please use this version with caution (or make adjustments as needed by using a custom function).
+
 ## Citation
 If you use our model in any project or publication, please cite our paper [Network Enrichment Significance Testing in Brain-Phenotype Association Studies](https://www.biorxiv.org/content/10.1101/2023.11.10.566593v1.abstract).
 
