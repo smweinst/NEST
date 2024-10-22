@@ -1,5 +1,5 @@
 # NEST
- The Python implementation of NEST 
+Implementation of NEST in R
 
 ## Details about `statFun` options
 The `statFun` argument determines how location-specific test statistics ("T(v)") are computed. We've provided several built-in options (e.g., `statFun='lm'` or `statFun='gam.deltaRsq'`), and there is also an option to specify a custom one (`statFun='custom'`).
