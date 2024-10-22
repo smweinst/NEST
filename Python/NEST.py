@@ -4,9 +4,10 @@ from checkArgs import check_args
 from pvalFun import pval_fun
 from enrichScore import enrichScore
 from statFun_lm import stat_fun_lm
+from statFun_gam_deltaRsq import statFun_gam_deltaRsq
 
 
-def NEST(statFun,args, net_maps, one_sided=True, seed=None):
+def NEST(statFun,args, net_maps, one_sided=True, seed=None, statFun_custom=None):
     '''
     Input:
         statFun:
@@ -51,15 +52,39 @@ def NEST(statFun,args, net_maps, one_sided=True, seed=None):
         print('No implementation.')
         return None
     
-    # For custom methods, the user should at least specify the arguments X, y, and method (method name). It is optional for users to add more arguments to args as needed.
+    elif statFun == 'gam_deltaRsq':
+        # added deltaRsq according to the R implementation (Credit for Autrey Luo)
+        required_args = ['X',"dat",'gam_full_smoother','gam_null_smoother','y_in_gam','y_in_lm','y_permute']
+        optional_args = ["getNull", "n_perm"]
+        args = check_args(args, required_args, optional_args)   
+        if args:
+            statFun_out = statFun_gam_deltaRsq(
+                                X=args['X'], 
+                                dat=args['dat'], 
+                                gam_full_smoother=args['gam_full_smoother'], 
+                                gam_null_smoother=args['gam_null_smoother'], 
+                                y_in_gam=args['y_in_gam'],
+                                y_in_lm=args['y_in_lm'], 
+                                y_permute=args['y_permute'], 
+                                seed=seed, 
+                                n_perm=args['n_perm'], 
+                            )
+            print(statFun_out['T_obs'])
+            print(len(statFun_out['T_obs']))
+
+        else:
+            print('Error. Please check args.')
+            return None     
+    
+    # For custom methods, the user should at least specify the arguments X, y, and statFun_custom (method name). It is optional for users to add more arguments to args as needed.
     elif statFun == 'custom':
-        required_args = ["X", "y", "method"]
+        required_args = ["X", "y"]
         optional_args = []
         #optional_args = ["Z", "type", "FL", "getNull", "n_perm"]
         args = check_args(args, required_args, optional_args)
 
         if args:
-            statFun_out = args["method"](args)
+            statFun_out = statFun_custom(**args)
     else:
         return None
 

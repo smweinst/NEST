@@ -7,7 +7,7 @@
 #'@param seed .....
 #'@param what.to.return .....
 #'@export
-NEST = function(statFun, args, net.maps, one.sided = TRUE, n.cores = 1, seed = NULL, what.to.return = c("pval")){
+NEST = function(statFun, args, net.maps, one.sided = TRUE, n.cores = 1, seed = NULL, what.to.return = c("pval"), statFun.custom=NULL){
 
   # check input requirements:
   if (!is.list(net.maps)){
@@ -48,7 +48,7 @@ NEST = function(statFun, args, net.maps, one.sided = TRUE, n.cores = 1, seed = N
 
   }
 
-  if (statFun == "gam.mvwald"){
+  else if (statFun == "gam.mvwald"){
 
     # check args:
     required.args = c("X","dat","gam.formula","lm.formula","y.in.gam","y.in.lm")
@@ -58,21 +58,50 @@ NEST = function(statFun, args, net.maps, one.sided = TRUE, n.cores = 1, seed = N
 
     if (!isFALSE(args)){
       statFun.out = statFun.gam.mvwald(X = args$X,
-                                        dat = args$dat,
-                                        gam.formula = args$gam.formula,
-                                        lm.formula = args$lm.formula,
-                                        y.in.gam = args$y.in.gam,
-                                        y.in.lm = args$y.in.lm,
-                                        y.permute = args$y.permute,
-                                       n.cores = n.cores, seed = seed,
-                                       n.perm = args$n.perm,
-                                       getNull = TRUE # if doing this inside NEST function, assume testing is being done (if just want to get map, could just use the statFun function directly)
-                                       )
+                                      dat = args$dat,
+                                      gam.formula = args$gam.formula,
+                                      lm.formula = args$lm.formula,
+                                      y.in.gam = args$y.in.gam,
+                                      y.in.lm = args$y.in.lm,
+                                      y.permute = args$y.permute,
+                                      n.cores = n.cores, seed = seed,
+                                      n.perm = args$n.perm,
+                                      getNull = TRUE # if doing this inside NEST function, assume testing is being done (if just want to get map, could just use the statFun function directly)
+                                      )
     }else{
       message("fix args!")
       return(NULL)
     }
 
+  }
+
+  else if (statFun == "gam.deltaRsq"){
+    if (!isFALSE(args)){
+      statFun.out = statFun.gam.deltaRsq(X = args$X,
+                                      dat = args$dat,
+                                      gam.full.formula = args$gam.full.formula,
+                                      gam.null.formula = args$gam.null.formula,
+                                      lm.formula = args$lm.formula,
+                                      y.in.gam = args$y.in.gam,
+                                      y.in.lm = args$y.in.lm,
+                                      y.permute = args$y.permute,
+                                      n.cores = n.cores, seed = seed,
+                                      n.perm = args$n.perm,
+                                      getNull = TRUE)
+    }else{
+      message("fix args!")
+      return(NULL)
+    }
+  }
+
+  # Custom function todo: test
+  else if (statFun == "custom"){
+    if(!is.null(statFun.custom)){
+      statFun.out = do.call(statFun.custom, args)
+    }else {
+       message(("fix statFun.custom"))
+       return(NULL)
+    }
   }
 
 
