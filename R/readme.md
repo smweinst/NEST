@@ -1,3 +1,11 @@
+# NEST
+ The Python implementation of NEST 
+
+## Details about `statFun` options
+The `statFun` argument determines how location-specific test statistics ("T(v)") are computed. We've provided several built-in options (e.g., `statFun='lm'` or `statFun='gam.deltaRsq'`), and there is also an option to specify a custom one (`statFun='custom'`).
+
+Many Thanks to Audrey Luo (@audreycluo) for providing the `gam.deltaRsq` implementation.
+
 Example code for implementing NEST in R
 ================
 
@@ -103,3 +111,20 @@ out <- NEST(statFun = "lm",
             what.to.return = "everything")
 
 ```
+
+## Citation
+If you use our method in any project or publication, please use the following citation [Network Enrichment Significance Testing in Brain-Phenotype Association Studies](https://onlinelibrary.wiley.com/doi/full/10.1002/hbm.26714).
+
+```
+@article{weinstein2024network,
+  title={Network enrichment significance testing in brain--phenotype association studies},
+  author={Weinstein, Sarah M and Vandekar, Simon N and Li, Bin and Alexander-Bloch, Aaron F and Raznahan, Armin and Li, Mingyao and Gur, Raquel E and Gur, Ruben C and Roalf, David R and Park, Min Tae M and others},
+  journal={Human Brain Mapping},
+  volume={45},
+  number={8},
+  pages={e26714},
+  year={2024},
+  publisher={Wiley Online Library}
+}
+```
+
