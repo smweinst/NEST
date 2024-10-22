@@ -1,14 +1,6 @@
 # NEST
  The Python implementation of NEST 
 
-# Illustration of NEST
-
- <p align="center">
-  <img width="100%" height="auto" src="https://github.com/smweinst/NEST/blob/main/Python/NEST_illustration.jpeg">
-</p>
-
-
-
 ## Getting Started:
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 ### Prerequisites
