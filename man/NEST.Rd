@@ -9,10 +9,10 @@ NEST(
   args,
   net.maps,
   one.sided = TRUE,
-  stat.fun,
   n.cores = 1,
   seed = NULL,
-  what.to.return = c("pval")
+  what.to.return = c("pval"),
+  statFun.custom = NULL
 )
 }
 \arguments{
@@ -24,13 +24,13 @@ NEST(
 
 \item{one.sided}{.....}
 
-\item{stat.fun}{.....}
-
 \item{n.cores}{.....}
 
 \item{seed}{.....}
 
 \item{what.to.return}{.....}
+
+\item{statFun.custom}{.....}
 }
 \description{
 NEST function
