@@ -16,21 +16,44 @@ NEST(
 )
 }
 \arguments{
-\item{statFun}{(to do: add descriptions)}
+\item{statFun}{A string specifying the statistical method to use. Options include:
+\describe{
+  \item{"lm"}{Linear regression model (`statFun.lm`).}
+  \item{"gam.mvwald"}{Generalized additive model with multivariate Wald tests (`statFun.gam.mvwald`).}
+  \item{"gam.deltaRsq"}{Generalized additive model for delta adjusted R-squared (`statFun.gam.deltaRsq`).}
+  \item{"custom"}{Custom statistical function provided via `statFun.custom`.}
+}}
 
-\item{args}{.....}
+\item{args}{A list of arguments required by the selected `statFun`. Specific arguments depend on the chosen method:
+\describe{
+  \item{"lm"}{Requires `X` (design matrix), `y` (response variable). Optional: `Z` (covariates), `type`, `FL`, `getNull`, `n.perm`.}
+  \item{"gam.mvwald"}{Requires `X`, `dat`, `gam.formula`, `lm.formula`, `y.in.gam`, `y.in.lm`.}
+  \item{"gam.deltaRsq"}{Requires `X`, `dat`, `gam.full.formula`, `gam.null.formula`, `lm.formula`, `y.in.gam`, `y.in.lm`.}
+  \item{"custom"}{Depends on the custom function implementation and should match the arguments specified in `statFun.custom`.}
+}}
 
-\item{net.maps}{.....}
+\item{net.maps}{A list of vectors representing network maps. Each vector contains 0s (outside network/ROI) and 1s (inside network/ROI). The length of each vector must match the number of columns in `X`.}
 
-\item{one.sided}{.....}
+\item{one.sided}{Logical. If `TRUE`, performs one-sided testing. Default is `TRUE`.}
 
-\item{n.cores}{.....}
+\item{n.cores}{Integer. The number of cores to use for parallel processing. Default is `1`.}
 
-\item{seed}{.....}
+\item{seed}{Integer. Random seed for reproducibility. Default is `NULL`.}
 
-\item{what.to.return}{.....}
+\item{what.to.return}{A character vector specifying the outputs to return. Options include:
+\describe{
+  \item{"pval"}{P-values for each network (default).}
+  \item{"ES"}{Enrichment scores (observed and null distributions).}
+  \item{"ES.obs"}{Observed enrichment scores.}
+  \item{"T.obs"}{Observed test statistics.}
+  \item{"T.null"}{Null test statistics.}
+  \item{"everything"}{All of the above outputs.}
+}}
 
-\item{statFun.custom}{.....}
+\item{statFun.custom}{A user-defined function for custom statistical analysis. Required if `statFun` is set to `"custom"`. This function should accept arguments passed via `args`.}
+}
+\value{
+A list containing outputs specified in `what.to.return`. Default is p-values for each network.
 }
 \description{
 NEST function

@@ -1,13 +1,34 @@
 #' NEST function
 #'@importFrom parallel mclapply
-#'@param statFun (to do: add descriptions) 
-#'@param args .....
-#'@param net.maps .....
-#'@param one.sided .....
-#'@param n.cores .....
-#'@param seed .....
-#'@param what.to.return .....
-#'@param statFun.custom .....
+#'@param statFun A string specifying the statistical method to use. Options include:
+#'   \describe{
+#'     \item{"lm"}{Linear regression model (`statFun.lm`).}
+#'     \item{"gam.mvwald"}{Generalized additive model with multivariate Wald tests (`statFun.gam.mvwald`).}
+#'     \item{"gam.deltaRsq"}{Generalized additive model for delta adjusted R-squared (`statFun.gam.deltaRsq`).}
+#'     \item{"custom"}{Custom statistical function provided via `statFun.custom`.}
+#'   }
+#'@param args A list of arguments required by the selected `statFun`. Specific arguments depend on the chosen method:
+#'   \describe{
+#'     \item{"lm"}{Requires `X` (design matrix), `y` (response variable). Optional: `Z` (covariates), `type`, `FL`, `getNull`, `n.perm`.}
+#'     \item{"gam.mvwald"}{Requires `X`, `dat`, `gam.formula`, `lm.formula`, `y.in.gam`, `y.in.lm`.}
+#'     \item{"gam.deltaRsq"}{Requires `X`, `dat`, `gam.full.formula`, `gam.null.formula`, `lm.formula`, `y.in.gam`, `y.in.lm`.}
+#'     \item{"custom"}{Depends on the custom function implementation and should match the arguments specified in `statFun.custom`.}
+#'   }
+#'@param net.maps A list of vectors representing network maps. Each vector contains 0s (outside network/ROI) and 1s (inside network/ROI). The length of each vector must match the number of columns in `X`.
+#'@param one.sided Logical. If `TRUE`, performs one-sided testing. Default is `TRUE`.
+#'@param n.cores Integer. The number of cores to use for parallel processing. Default is `1`.
+#'@param seed Integer. Random seed for reproducibility. Default is `NULL`.
+#'@param what.to.return A character vector specifying the outputs to return. Options include:
+#'   \describe{
+#'     \item{"pval"}{P-values for each network (default).}
+#'     \item{"ES"}{Enrichment scores (observed and null distributions).}
+#'     \item{"ES.obs"}{Observed enrichment scores.}
+#'     \item{"T.obs"}{Observed test statistics.}
+#'     \item{"T.null"}{Null test statistics.}
+#'     \item{"everything"}{All of the above outputs.}
+#'   }
+#'@param statFun.custom A user-defined function for custom statistical analysis. Required if `statFun` is set to `"custom"`. This function should accept arguments passed via `args`.
+#'@return A list containing outputs specified in `what.to.return`. Default is p-values for each network.
 #'@export
 NEST = function(statFun, args, net.maps, one.sided = TRUE, n.cores = 1, seed = NULL, what.to.return = c("pval"), statFun.custom=NULL){
 
